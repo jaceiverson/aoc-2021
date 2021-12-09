@@ -51,7 +51,7 @@ source venv/bin/activate
 ```
 ### install all the necessary packages
 ```
-pip install requirements.txt -r
+pip install -r requirements.txt
 ```
 
 Now we are all installed and need one more step before the automation can begin
