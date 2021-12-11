@@ -1,5 +1,5 @@
 # AOC Util for Python
-A library to help create files and pull inputs for the Advent of Code. Can be used to generate previous years input/files as well.
+A library to help create files and pull inputs for the <a href=https://adventofcode.com>Advent of Code</a>. Can be used to generate previous years input/files as well.
 
 # AOC Star Summary
 | Year   |   Stars |   Completion % |
