@@ -1,5 +1,5 @@
 # AOC Util for Python
-A library to help create files and pull inputs for the Advent of Code. Can be used to generate previous years input/files as well.
+A library to help create files and pull inputs for the <a href=https://adventofcode.com>Advent of Code</a>. Can be used to generate previous years input/files as well.
 
 # AOC Star Summary
 | Year   |   Stars |   Completion % |
@@ -51,7 +51,7 @@ source venv/bin/activate
 ```
 ### install all the necessary packages
 ```
-pip install requirements.txt -r
+pip install -r requirements.txt
 ```
 
 Now we are all installed and need one more step before the automation can begin
