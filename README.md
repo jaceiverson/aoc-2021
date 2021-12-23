@@ -4,14 +4,14 @@ A library to help create files and pull inputs for the <a href=https://adventofc
 # AOC Star Summary
 | Year   |   Stars |   Completion % |
 |--------|---------|----------------|
-| [2021] |      10 |          20    |
+| [2021] |      20 |          40    |
 | [2020] |      14 |          28    |
-| [2019] |         |           0    |
+| [2019] |       7 |          14    |
 | [2018] |         |           0    |
 | [2017] |         |           0    |
 | [2016] |         |           0    |
 | [2015] |         |           0    |
-| TOTAL  |      24 |           6.86 |
+| TOTAL  |      41 |          11.71 |
 
 # Automatic Summary Update 
 You can automatically update your summary table like the one above. There are functions in the local helper modual that 
@@ -90,17 +90,17 @@ data = read("./{year}/inputs/{day}.txt")
 # PARSE INPUT
 
 # PART 1
-
+part_1_answer = None
 print(f"PART 1: {part_1_answer}")
 
 # PART 2
-
+part_2_answer = None
 print(f"PART 2: {part_2_answer}")
 ```
 ## Flags
 Use flags to add additional arguments to the script. You will add the value after you type the flag. If you wanted to create a file and get the input for Dec 7, 2014's challenge, you would do the following
 ```
-python newday -d 7 -y 2014 -i
+python newday -i -d 7 -y 2014
 ```
 ### -i (--input)
 Pulls the input for the day selected. Must have session id stored as an environment variable named COOKIE_SESSION in the .env file
@@ -116,6 +116,9 @@ default: today's date (int)
 Changes the year from the current year to any of the previous. Selection is each year including and after 2015. (2015-)
 
 default: today's year (int)
+
+#### Flag Ordering
+It does not matter the order that you have your flags, just know that the values should follow the flag.
 
 ## Steps to make Unix Command
 You can also follow these steps to make a Unix Command name "newday". This will allow you to run the script by only typing "newday" instead of the traditional python command "python newday".
