@@ -4,14 +4,15 @@ A library to help create files and pull inputs for the <a href=https://adventofc
 # AOC Star Summary
 | Year   |   Stars |   Completion % |
 |--------|---------|----------------|
-| [2021] |      20 |          40    |
+| [2022] |         |           0    |
+| [2021] |      22 |          44    |
 | [2020] |      14 |          28    |
-| [2019] |       7 |          14    |
-| [2018] |         |           0    |
+| [2019] |       9 |          18    |
+| [2018] |       6 |          12    |
 | [2017] |         |           0    |
 | [2016] |         |           0    |
 | [2015] |         |           0    |
-| TOTAL  |      41 |          11.71 |
+| TOTAL  |      51 |          12.75 |
 
 # Automatic Summary Update 
 You can automatically update your summary table like the one above. There are functions in the local helper modual that 
