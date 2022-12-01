@@ -1,3 +1,3 @@
-from newday.update import newday
+from .file_creation import newday
 
 newday()
