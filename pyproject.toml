@@ -1,7 +1,17 @@
 [project]
-name = "jace-aoc"
-description = "Helps with advent of code"
+name = "jace-aoc-util"
+description = "Helps with advent of code. Creating files, downloading inputs."
 version = "0.0.1"
+readme = "README.md"
+author = "Jace Iverson"
+dependencies = [
+    requests,
+    bs4,
+    pandas,
+    rich,
+    python-dotenv,
+    tabulate
+]
 
 [project.scripts]
 newday="aoc_util.file_creation:newday"
