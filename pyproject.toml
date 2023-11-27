@@ -5,12 +5,12 @@ version = "0.0.1"
 readme = "README.md"
 author = "Jace Iverson"
 dependencies = [
-    requests,
-    bs4,
-    pandas,
-    rich,
-    python-dotenv,
-    tabulate
+    "requests",
+    "bs4",
+    "pandas",
+    "rich",
+    "python-dotenv",
+    "tabulate",
 ]
 
 [project.scripts]
