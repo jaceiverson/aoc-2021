@@ -8,7 +8,7 @@ import warnings
 from requests.models import HTTPError
 
 # local module to request pages from AOC
-from helper.aoc_requests import get_aoc_page
+from aoc_util.aoc_requests import get_aoc_page
 
 
 def is_valid_date(day: int, year: int) -> bool:

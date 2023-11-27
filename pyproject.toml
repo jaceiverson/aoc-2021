@@ -1,0 +1,8 @@
+[project]
+name = "aoc_util"
+description = "Helps with advent of code"
+version = "0.0.1"
+
+[project.scripts]
+newday="aoc_util.file_creation:newday"
+update_readme="aoc_util.readme:update_readme"

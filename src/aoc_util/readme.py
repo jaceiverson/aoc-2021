@@ -5,7 +5,7 @@ from datetime import date
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from helper.aoc_requests import get_aoc_page
+from aoc_util.aoc_requests import get_aoc_page
 
 
 def get_aoc_stars() -> str:
