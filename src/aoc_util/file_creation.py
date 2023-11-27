@@ -12,7 +12,7 @@ from requests.models import HTTPError
 from aoc_util.aoc_requests import get_aoc_page
 
 
-def is_valid_date(day: int, month: int, year: int) -> bool:
+def is_valid_date(day: int, year: int) -> bool:
     """
     checks to validate the passed in day is
     less than or equal to today's date in order to
@@ -28,7 +28,7 @@ def is_valid_date(day: int, month: int, year: int) -> bool:
             False -> requested input is in the future and cannot be accessed
     """
     today_date = dt.date.today()
-    return year <= today_date.year and day <= today_date.day and month == 12
+    return year <= today_date.year and day <= today_date.day
 
 
 def is_aoc_input_ready(day: int, year: int) -> bool:
@@ -48,7 +48,7 @@ def is_aoc_input_ready(day: int, year: int) -> bool:
     return False
 
 
-def create_input_file(day: int, month: int, year: int) -> None:
+def create_input_file(day: int, year: int) -> None:
     """
     Uses your session cookie (to get your specific login) to pull your
     Puzzle Inputs. You can find session cookie
@@ -145,12 +145,16 @@ def newday() -> None:
         help="If tagged retrives the selected day's input. Requires session cookie as env variable.",
     )
     args = parser.parse_args()
-    if args.day is None and args.year is None:
+    if args.day is None and args.year is None and dt.date.today().month!=12:
+        raise ValueError("Sorry. Default values are only available in December.")
+    
+    if args.day is None: 
         args.day = dt.date.today().day
+    if args.year is None:
         args.year = dt.date.today().year
-        args.month = dt.date.today().month
 
-    if not is_valid_date(args.day, dt.date.today().month, args.year):
+
+    if not is_valid_date(args.day, args.year):
         raise ValueError(f"Selections for newday are invalid.\n{args}")
 
     # CHECK VALUES to make sure they are in range
@@ -166,7 +170,7 @@ def newday() -> None:
     create_python_file(args.day, args.year)
     if args.input and is_aoc_input_ready(args.day, args.year):
         print("CREATING INPUT FILE")
-        create_input_file(args.day, args.month, args.year)
+        create_input_file(args.day, args.year)
     print("PROCESS COMPLETE")
 
 
