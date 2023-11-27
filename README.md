@@ -3,60 +3,33 @@
 A library to help create files and pull inputs for the <a href=https://adventofcode.com>Advent of Code</a>. Can be used to generate previous years input/files as well.
 
 # AOC Star Summary
-| Year   |   Stars |   Completion % |
-|--------|---------|----------------|
-| [2023] |         |           0    |
-| [2022] |      21 |          42    |
-| [2021] |      25 |          50    |
-| [2020] |      14 |          28    |
-| [2019] |      10 |          20    |
-| [2018] |      10 |          20    |
-| [2017] |      15 |          30    |
-| [2016] |      20 |          40    |
-| [2015] |      32 |          64    |
-| TOTAL  |     147 |          32.67 |
+
+| Year   | Stars | Completion % |
+| ------ | ----- | ------------ |
+| [2023] |       | 0            |
+| [2022] | 21    | 42           |
+| [2021] | 25    | 50           |
+| [2020] | 14    | 28           |
+| [2019] | 10    | 20           |
+| [2018] | 10    | 20           |
+| [2017] | 15    | 30           |
+| [2016] | 20    | 40           |
+| [2015] | 32    | 64           |
+| TOTAL  | 147   | 32.67        |
 
 # Installation
 
-## Clone Repo
+## Directly from GitHub
 
-Navigate to your desired directory in terminal. Run the `git clone` command to download the files:
-
-```
-git clone https://github.com/jaceiverson/aoc-util.git
-```
-
-Now you have the files on your machine
-
-## Create virtual environment
-
-I recommended to create a virtualenv using the <a href="https://pypi.org/project/virtualenv/" target="_blank">virtualenv library</a>. Follow these steps:
-
-## install the package to main python instance
+The best way to install this is to do it directly from GitHub with the following command:
 
 ```
-pip3 install virtualenv
+pip install git+https://github.com/jaceiverson/aoc-util.git
 ```
 
-## actually create the virtual environment
+This will allow you to run the command `newday` and `update-readme` in your project.
 
-```
-python3 -m virtualenv venv
-```
-
-## activate the environment
-
-```
-source venv/bin/activate
-```
-
-## install all the necessary packages
-
-```
-pip install -r requirements.txt
-```
-
-Now we are all installed and need one more step before the automation can begin
+> Remember that it is always best practice to use a virtual environment.
 
 # Session id cookie
 
@@ -73,7 +46,7 @@ Now you will be able to use the automation without a hitch. Carry on.
 
 # File Automation
 
-The automation of this project relies on the `newday` and `update-readme` modules. We will run modules using the standard syntax of python modules: `python -m {module-name}`
+The automation of this project relies on the `newday` and `update-readme` modules. We will run these as scripts as defined by the pyproject.toml.
 
 ## update-readme - Automatic Summary Table Update
 
@@ -86,7 +59,7 @@ Automatically update (or generate) your summary table like <a href=https://githu
 To do this, run the command
 
 ```
-python -m update-readme
+update-readme
 ```
 
 Note: for this to happen, you must have saved your <a href=https://github.com/jaceiverson/aoc-util#Session-id-cookie>session id</a> as an environment variable.
@@ -101,7 +74,7 @@ Generate files for each day's solution as well as pulling in the input .txt file
     - More information on the project <a href=https://github.com/jaceiverson/aoc-util#File-Structure>file structure</a>.<br>
 
 ```
-python -m newday
+newday
 ```
 
 ### Solution Files
@@ -133,7 +106,7 @@ print(f"PART 2: {part_2_answer}")
 Use flags to add additional arguments to the script. You will add the value after you type the flag. If you wanted to create a file and get the input for Dec 7, 2014's challenge, you would do the following
 
 ```
-python -m newday -i -d 7 -y 2014
+newday -i -d 7 -y 2014
 ```
 
 ### -i (--input)
@@ -165,20 +138,14 @@ When you clone/fork and set up this repo for use, you should have the following 
 ```
 advent_of_code/
 └── src/
-    └── helper/
-        └── __init__.py
-        └── helper.py
-        └── newday/
-            └── __init__.py
-            └── __main__.py
-            └── file_creation.py
-        └── update-readme/
-            └── __init__.py
-            └── __main__.py
-            └── update.py
+    └── aoc_util
+        ├── __init__.py
+        ├── aoc_requests.py
+        ├── file_creation.py
+        ├── helper.py
+        └── readme.py
 └── 20**/
     └── input/
     └── solutions/
 └── .env
-└── venv
 ```
