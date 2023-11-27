@@ -99,7 +99,7 @@ def create_python_file(day: int, year: int) -> None:
         $ python solutions/helper.py {day int to create}
     """
     # read in the tempalte file
-    with open("file_template.py", "r") as f:
+    with open("src/aoc_util/TEMPLATE_FILE.py", "r") as f:
         file_text = f.read()
 
     # alter the template to include the actual year and day
