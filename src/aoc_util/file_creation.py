@@ -145,14 +145,14 @@ def newday() -> None:
         help="If tagged retrives the selected day's input. Requires session cookie as env variable.",
     )
     args = parser.parse_args()
-    if args.day is None and args.year is None and dt.date.today().month!=12:
+
+    if args.day is None and args.year is None and dt.date.today().month != 12:
         raise ValueError("Sorry. Default values are only available in December.")
-    
-    if args.day is None: 
+
+    if args.day is None:
         args.day = dt.date.today().day
     if args.year is None:
         args.year = dt.date.today().year
-
 
     if not is_valid_date(args.day, args.year):
         raise ValueError(f"Selections for newday are invalid.\n{args}")
