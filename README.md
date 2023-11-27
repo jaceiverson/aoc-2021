@@ -31,6 +31,10 @@ This will allow you to run the command `newday` and `update-readme` in your proj
 
 > Remember that it is always best practice to use a virtual environment.
 
+## TEMPLATE FILE
+
+You will need to have a template file named `TEAMPLATE_FILE.py` in the root of your project for this to work. I have provided an example of one here. The script for `newday` will use that template to create your file for the given day. You can change the template however you'd like, and the script will replace all instances of `{year}` and `{day}` with the current year and day combination provided to the script (see defaults and flags below).
+
 # Session id cookie
 
 You will need to have your session id saved as an environment variable. In this project I use dotenv; this allows me to store these variables in a .env file, and access them in my code after using the `load_dotenv()` function.
