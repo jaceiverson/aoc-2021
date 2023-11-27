@@ -5,7 +5,7 @@ from datetime import date
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from helper.aoc_requests import get_aoc_page
+from aoc_util.aoc_requests import get_aoc_page
 
 
 def get_aoc_stars() -> str:
@@ -33,10 +33,14 @@ def get_aoc_stars() -> str:
     df.columns = ["Year", "Stars"]
     df["Completion %"] = (df["Stars"].fillna(0).astype(int) / 50) * 100
     all_possible = df.shape[0] * 50
-    df = df.append(
-        pd.DataFrame(
-            [["TOTAL", total, (int(total) / all_possible) * 100]], columns=df.columns
-        )
+    df = pd.concat(
+        [
+            df,
+            pd.DataFrame(
+                [["TOTAL", total, (int(total) / all_possible) * 100]],
+                columns=df.columns,
+            ),
+        ]
     )
     df["Completion %"] = round(df["Completion %"], 2)
     # return the Markdown table for use

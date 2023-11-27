@@ -1,14 +1,15 @@
 """Help create files and pull input for AOC"""
 from argparse import ArgumentParser
 from pathlib import Path
-from datetime import date
+import datetime as dt
 import warnings
+from rich import print
 
 # HTTP Requests
 from requests.models import HTTPError
 
 # local module to request pages from AOC
-from helper.aoc_requests import get_aoc_page
+from aoc_util.aoc_requests import get_aoc_page
 
 
 def is_valid_date(day: int, year: int) -> bool:
@@ -26,8 +27,25 @@ def is_valid_date(day: int, year: int) -> bool:
             True -> requested input can be queried,
             False -> requested input is in the future and cannot be accessed
     """
-    today_date = date.today()
+    today_date = dt.date.today()
     return year <= today_date.year and day <= today_date.day
+
+
+def is_aoc_input_ready(day: int, year: int) -> bool:
+    """
+    checks to see if the input is ready to be pulled
+    """
+    today = dt.date.today()
+    if dt.date(year, 12, day) <= today:
+        return True
+    warnings.warn_explicit(
+        "\nInput is not ready. Please request a valid day, or wait for your input to be ready.",
+        UserWarning,
+        f"src/file_creation.py : get_input(day={day},year={year}) : line ",
+        50,
+        "newday",
+    )
+    return False
 
 
 def create_input_file(day: int, year: int) -> None:
@@ -46,34 +64,24 @@ def create_input_file(day: int, year: int) -> None:
         This does not create the test input (from the question),
         you will have to create that file yourself
     """
-    if is_valid_date(day, year):
-        file_path = Path(f"./{year}/inputs/{day}.txt")
-        # if the folder doesn't exists, create it
-        if not file_path.parent.exists():
-            file_path.parent.mkdir(parents=True)
-        # if the file doesn't exists, create it and save the request data
-        if not file_path.exists():
-            # HTTP request
-            r = get_aoc_page(f"https://adventofcode.com/{year}/day/{day}/input")
-            if not r.ok:
-                raise HTTPError(
-                    f"Did not get status 200. STATUS: {r.status_code}, "
-                    "verify session cookie is correct"
-                )
-            with open(file_path, "w") as f:
-                f.write(r.text)
-            print(f"INPUT SAVED: {file_path}")
-        else:
-            print(f"{file_path} already exists. Will not overwrite")
+    file_path = Path(f"./{year}/inputs/{day}.txt")
+    # if the folder doesn't exists, create it
+    if not file_path.parent.exists():
+        file_path.parent.mkdir(parents=True)
+    # if the file doesn't exists, create it and save the request data
+    if not file_path.exists():
+        # HTTP request
+        r = get_aoc_page(f"https://adventofcode.com/{year}/day/{day}/input")
+        if not r.ok:
+            raise HTTPError(
+                f"Did not get status 200. STATUS: {r.status_code}, "
+                "verify session cookie is correct"
+            )
+        with open(file_path, "w") as f:
+            f.write(r.text)
+        print(f"INPUT SAVED: {file_path}")
     else:
-        days_left = (year - date.today().year) * 365 + day - date.today().day
-        warnings.warn_explicit(
-            f"\nInput is not ready. Please request a valid day, or wait {days_left} days for your input to be ready.",
-            UserWarning,
-            f"src/file_creation.py : get_input(day={day},year={year}) : line ",
-            50,
-            "newday",
-        )
+        print(f"{file_path} already exists. Will not overwrite")
 
 
 def create_python_file(day: int, year: int) -> None:
@@ -91,7 +99,7 @@ def create_python_file(day: int, year: int) -> None:
         $ python solutions/helper.py {day int to create}
     """
     # read in the tempalte file
-    with open("src/newday/file_template.py", "r") as f:
+    with open("TEMPLATE_FILE.py", "r") as f:
         file_text = f.read()
 
     # alter the template to include the actual year and day
@@ -110,14 +118,12 @@ def create_python_file(day: int, year: int) -> None:
 
 
 def newday() -> None:
-    today = date.today().day
-    year = date.today().year
     parser = ArgumentParser(description="Create AOC Python Files from template.")
     parser.add_argument(
         "-d",
         "--day",
         nargs="?",
-        default=today,
+        default=None,
         type=int,
         help="Defaults to today's date (day), can change to any day (1-25)",
     )
@@ -125,7 +131,7 @@ def newday() -> None:
         "-y",
         "--year",
         nargs="?",
-        default=year,
+        default=None,
         type=int,
         help="Defaults to this year, can change to any previous year (2015-).",
     )
@@ -139,16 +145,30 @@ def newday() -> None:
         help="If tagged retrives the selected day's input. Requires session cookie as env variable.",
     )
     args = parser.parse_args()
+    if args.day is None and args.year is None and dt.date.today().month!=12:
+        raise ValueError("Sorry. Default values are only available in December.")
+    
+    if args.day is None: 
+        args.day = dt.date.today().day
+    if args.year is None:
+        args.year = dt.date.today().year
+
+
+    if not is_valid_date(args.day, args.year):
+        raise ValueError(f"Selections for newday are invalid.\n{args}")
+
     # CHECK VALUES to make sure they are in range
     if args.day not in range(1, 26):
         raise ValueError("Day needs to be in range (1-25)")
-    if args.year not in range(2015, year + 1):
-        raise ValueError(f"Year needs to be in range {range(2015,year+1)}")
+    if args.year not in range(2015, dt.date.today().year + 1):
+        raise ValueError(
+            f"Year needs to be in range {range(2015,dt.date.today().year+1)}"
+        )
 
     print(args)
     print("CREATING PYTHON FILE")
     create_python_file(args.day, args.year)
-    if args.input:
+    if args.input and is_aoc_input_ready(args.day, args.year):
         print("CREATING INPUT FILE")
         create_input_file(args.day, args.year)
     print("PROCESS COMPLETE")
