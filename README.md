@@ -3,18 +3,18 @@
 A library to help create files and pull inputs for the <a href=https://adventofcode.com>Advent of Code</a>. Can be used to generate previous years input/files as well.
 
 # AOC Star Summary
-
-| Year   | Stars | Completion % |
-| ------ | ----- | ------------ |
-| [2022] |       | 0            |
-| [2021] | 22    | 44           |
-| [2020] | 14    | 28           |
-| [2019] | 9     | 18           |
-| [2018] | 6     | 12           |
-| [2017] |       | 0            |
-| [2016] |       | 0            |
-| [2015] |       | 0            |
-| TOTAL  | 51    | 12.75        |
+| Year   |   Stars |   Completion % |
+|--------|---------|----------------|
+| [2023] |         |           0    |
+| [2022] |      21 |          42    |
+| [2021] |      25 |          50    |
+| [2020] |      14 |          28    |
+| [2019] |      10 |          20    |
+| [2018] |      10 |          20    |
+| [2017] |      15 |          30    |
+| [2016] |      20 |          40    |
+| [2015] |      32 |          64    |
+| TOTAL  |     147 |          32.67 |
 
 # Installation
 
