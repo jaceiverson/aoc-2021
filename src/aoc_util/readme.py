@@ -60,9 +60,12 @@ def update_readme(new_table: Optional[str] = None) -> None:
         md = f.read()
     # remove current table (Only Element under AOC Star Summary)
     new = md.split("#")
-    summary_idx = [idx for idx, x in enumerate(new) if "AOC Star Summary" in x][0]
-    # add the updated table in, replacing the old
-    new[summary_idx] = f" AOC Star Summary\n{new_table}\n\n"
+    if "AOC Star Summary" not in md:
+        new.append(f" AOC Star Summary\n{new_table}\n\n")
+    else: 
+        summary_idx = [idx for idx, x in enumerate(new) if "AOC Star Summary" in x][0]
+        # add the updated table in, replacing the old
+        new[summary_idx] = f" AOC Star Summary\n{new_table}\n\n"
 
     # write back the new README with updated table
     with open("README.md", "w") as f:
