@@ -43,7 +43,7 @@ You will need to have a template file named `TEAMPLATE_FILE.py` in the root of y
 
 ## 3 - Session ID cookie
 
-You will need to have your session id saved as an environment variable. You can find your session ID in the chrome inspect tool in either Network or Application tab after signing into Advent of Code.
+You will need to have your session id saved as an environment variable. You can find your session ID in the chrome inspect tool (right click anywhere on the page, then find Inspect--normally on the bottom of the right click menu) in either Network or Application tab after signing into Advent of Code.
 
 > In the Network tab you will have to inspect a request and find the cookie in the header of that request
 
