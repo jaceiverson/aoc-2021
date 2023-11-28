@@ -62,7 +62,7 @@ def update_readme(new_table: Optional[str] = None) -> None:
     new = md.split("#")
     if "AOC Star Summary" not in md:
         new.append(f" AOC Star Summary\n{new_table}\n\n")
-    else: 
+    else:
         summary_idx = [idx for idx, x in enumerate(new) if "AOC Star Summary" in x][0]
         # add the updated table in, replacing the old
         new[summary_idx] = f" AOC Star Summary\n{new_table}\n\n"
