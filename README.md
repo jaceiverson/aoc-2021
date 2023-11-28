@@ -17,9 +17,15 @@ A library to help create files and pull inputs for the <a href=https://adventofc
 | [2015] | 32    | 64           |
 | TOTAL  | 147   | 32.67        |
 
-# Installation
+# Installation and Setup
 
-## Directly from GitHub
+To make this project work, you will need to do 3 things as setup:
+
+1. pip install from GitHub
+2. Create a template file named TEMPLATE_FILE.py
+3. Save your Advent of Code Session ID cookie as an environment variable.
+
+## 1 - Install Directly from GitHub
 
 The best way to install this is to do it directly from GitHub with the following command:
 
@@ -31,13 +37,13 @@ This will allow you to run the command `newday` and `update-readme` in your proj
 
 > Remember that it is always best practice to use a virtual environment.
 
-## TEMPLATE FILE
+## 2 - TEMPLATE FILE
 
 You will need to have a template file named `TEAMPLATE_FILE.py` in the root of your project for this to work. I have provided an example of one here. The script for `newday` will use that template to create your file for the given day. You can change the template however you'd like, and the script will replace all instances of `{year}` and `{day}` with the current year and day combination provided to the script (see defaults and flags below).
 
-# Session id cookie
+## 3 - Session ID cookie
 
-You will need to have your session id saved as an environment variable. In this project I use dotenv; this allows me to store these variables in a .env file, and access them in my code after using the `load_dotenv()` function.
+You will need to have your session id saved as an environment variable. You can find your session ID in the chrome inspect tool in either Network or Application. In Network you will have to inspect a request and find the cookie in the header. In Application you will have to find the Cookies section.
 
 1. Create a `.env` file in the main directory of the project
 2. Save your session id in your .env file in this format
@@ -88,7 +94,7 @@ Below is the template for the solution .py files that are generated
 ```py
 """https://adventofcode.com/{year}/day/{day}"""
 
-from helper import read
+from aoc_util import read
 
 # READ INPUT
 data = read("./{year}/inputs/{day}.txt")
