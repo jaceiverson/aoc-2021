@@ -58,7 +58,7 @@ Now you will be able to use the automation without a hitch. Carry on.
 
 The automation of this project relies on the `newday` and `update-readme` modules. We will run these as scripts as defined by the pyproject.toml.
 
-## update-readme - Automatic Summary Table Update
+# update-readme - Automatic Summary Table Update
 
 Automatically update (or generate) your summary table like <a href=https://github.com/jaceiverson/aoc-util#AOC-Star-Summary>the one above</a>.
 
@@ -74,41 +74,33 @@ update-readme
 
 Note: for this to happen, you must have saved your <a href=https://github.com/jaceiverson/aoc-util#Session-id-cookie>session id</a> as an environment variable.
 
-## newday - Running the File Creation & Input Extraction Script
+# newday - Running the File Creation & Input Extraction Script
 
 Generate files for each day's solution as well as pulling in the input .txt files from the site.
 
 1.  Creates a .py and .txt file for the specified day / year
     - directories will be created if necessary
-2.  Pre-populate generic values (you can change this in the newday folder).
-    - More information on the project <a href=https://github.com/jaceiverson/aoc-util#File-Structure>file structure</a>.<br>
+    - defaults to the current date (`dt.date.today()`)
+2.  Pre-populate generic values (you can change this in the `TEMPLATE_FILE.py` file)
 
 ```
 newday
 ```
 
-### Solution Files
+If you run `newday` outside of December it will throw an error. You can by pass this by defining flags (see below) to generate files outside of December. You will never be able to get inputs for future dates (only past ones), but you can generate files for future days by using the correct flags.
 
-Below is the template for the solution .py files that are generated
+You could run it on past years, or with other flags to get around that.
 
-```py
-"""https://adventofcode.com/{year}/day/{day}"""
+> Create a solution file for December 1st (doesn't get input file)
 
-from aoc_util import read
+```
+newday -d 1
+```
 
-# READ INPUT
-data = read("./{year}/inputs/{day}.txt")
-# TEST INPUT
-# data = read("./{year}/inputs/{day}-test.txt")
-# PARSE INPUT
+> Create a solution file for December 1st, 2015 and pulls in the input data
 
-# PART 1
-part_1_answer = None
-print(f"PART 1: {part_1_answer}")
-
-# PART 2
-part_2_answer = None
-print(f"PART 2: {part_2_answer}")
+```
+newday -d 1 -y 2015 -i
 ```
 
 ## newday - Flags
@@ -140,6 +132,32 @@ default: today's year (int)
 ## Flag Ordering
 
 It does not matter the order that you have your flags, just know that the values should follow the flag.
+
+## Template File
+
+Below is the `TEMPLATE_FILE.py` that other files are generated from:
+
+```py
+"""https://adventofcode.com/{year}/day/{day}"""
+
+from aoc_util import read
+
+# READ INPUT
+data = read("./{year}/inputs/{day}.txt").strip().split("\n")
+# TEST INPUT
+# data = read("./{year}/inputs/{day}-test.txt").strip().split("\n")
+# PARSE INPUT
+
+# PART 1
+
+part_1_answer = None
+print(f"PART 1: {part_1_answer}")
+
+# PART 2
+
+part_2_answer = None
+print(f"PART 2: {part_2_answer}")
+```
 
 # File Structure
 
