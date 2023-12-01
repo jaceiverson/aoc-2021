@@ -4,6 +4,7 @@ from pathlib import Path
 import datetime as dt
 import warnings
 from rich import print
+import pytz
 
 # HTTP Requests
 from requests.models import HTTPError
@@ -11,6 +12,8 @@ from requests.models import HTTPError
 # local module to request pages from AOC
 from aoc_util.aoc_requests import get_aoc_page
 
+# EASTERN TIME FOR EVERYTHING
+EASTERN = pytz.timezone("US/Eastern")
 
 def is_valid_date(day: int, year: int) -> bool:
     """
@@ -27,7 +30,7 @@ def is_valid_date(day: int, year: int) -> bool:
             True -> requested input can be queried,
             False -> requested input is in the future and cannot be accessed
     """
-    today_date = dt.date.today()
+    today_date = dt.datetime.now(EASTERN)
     return year <= today_date.year and day <= today_date.day
 
 
@@ -35,8 +38,8 @@ def is_aoc_input_ready(day: int, year: int) -> bool:
     """
     checks to see if the input is ready to be pulled
     """
-    today = dt.date.today()
-    if dt.date(year, 12, day) <= today:
+    today = dt.datetime.now(EASTERN)
+    if EASTERN.localize(dt.datetime(year, 12, day)) <= today:
         return True
     warnings.warn_explicit(
         "\nInput is not ready. Please request a valid day, or wait for your input to be ready.",
@@ -146,13 +149,13 @@ def newday() -> None:
     )
     args = parser.parse_args()
 
-    if args.day is None and args.year is None and dt.date.today().month != 12:
+    if args.day is None and args.year is None and dt.datetime.now(EASTERN).month != 12:
         raise ValueError("Sorry. Default values are only available in December.")
 
     if args.day is None:
-        args.day = dt.date.today().day
+        args.day = dt.datetime.now(EASTERN).day
     if args.year is None:
-        args.year = dt.date.today().year
+        args.year = dt.datetime.now(EASTERN).year
 
     if not is_valid_date(args.day, args.year):
         raise ValueError(f"Selections for newday are invalid.\n{args}")
@@ -160,9 +163,9 @@ def newday() -> None:
     # CHECK VALUES to make sure they are in range
     if args.day not in range(1, 26):
         raise ValueError("Day needs to be in range (1-25)")
-    if args.year not in range(2015, dt.date.today().year + 1):
+    if args.year not in range(2015, dt.datetime.now(EASTERN).year + 1):
         raise ValueError(
-            f"Year needs to be in range {range(2015,dt.date.today().year+1)}"
+            f"Year needs to be in range {range(2015,dt.datetime.now(EASTERN).year+1)}"
         )
 
     print(args)
