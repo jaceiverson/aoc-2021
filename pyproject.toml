@@ -1,7 +1,7 @@
 [project]
 name = "jace-aoc-util"
 description = "Helps with advent of code. Creating files, downloading inputs."
-version = "0.0.5"
+version = "0.0.6"
 readme = "README.md"
 authors = [
   {name = "Jace Iverson", email = "iverson.jace@gmail.com"},
