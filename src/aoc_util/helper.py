@@ -1,16 +1,41 @@
 """Helper functions to automate AOC"""
 
-import pathlib
-from typing import Any
+from pathlib import Path
 from time import perf_counter_ns
+from typing import Any
 
 
 def read(path: str) -> str:
-    """General Purpose Read a Text file and Return"""
-    return pathlib.Path(path).read_text()
+    """General Purpose Read a Text file"""
+    return Path(path).read_text()
 
 
-def chunks(l: list, n: int = 5) -> list[list[Any]]:
+def write(path: str, data: str) -> None:
+    """General Purpose Write to text file. Will create the file if it doesn't exists"""
+    p = Path(path)
+    if not p.parent.exists():
+        p.parent.mkdir(parents=True)
+    return p.write_text(data)
+
+
+def check_paths_create_files(p: Path) -> bool:
+    """
+    Checks a pathlib Path object.
+    Creates parent directories if they don't exist
+    Creates the file if it doesn't exist
+
+    Returns True if file is created
+    Returns False if the file already exists
+    """
+    if not p.parent.exists():
+        p.parent.mkdir(parents=True)
+    if p.exists():
+        return False
+    p.touch()
+    return True
+
+
+def chunks(input_list: list, n: int = 5) -> list[list[Any]]:
     """
     params:
         l: taks in a list (or list like object)
@@ -19,7 +44,7 @@ def chunks(l: list, n: int = 5) -> list[list[Any]]:
     returns:
         a list of lists with the smaller lists being size n
     """
-    return [l[i : i + n] for i in range(0, len(l), n)]
+    return [input_list[i : i + n] for i in range(0, len(input_list), n)]
 
 
 """

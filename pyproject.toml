@@ -1,7 +1,7 @@
 [project]
 name = "jace-aoc-util"
 description = "Helps with advent of code. Creating files, downloading inputs."
-version = "0.0.2"
+version = "0.0.3"
 readme = "README.md"
 authors = [
   {name = "Jace Iverson", email = "iverson.jace@gmail.com"},
@@ -19,5 +19,30 @@ dependencies = [
 ]
 
 [project.scripts]
-newday="aoc_util.file_creation:newday"
+newday="aoc_util.main:newday"
 update-readme="aoc_util.readme:update_readme"
+
+[tool.ruff.lint]
+select = [
+  # pycodestyle
+  "E",
+  # Pyflakes
+  "F",
+  # pyupgrade
+  "UP",
+  # flake8-bugbear
+  "B",
+  # flake8-simplify
+  "SIM",
+  # isort
+  "I",
+  #flake8-bandit
+  "S"
+]
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false

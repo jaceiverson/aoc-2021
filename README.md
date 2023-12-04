@@ -3,19 +3,18 @@
 A library to help create files and pull inputs for the <a href=https://adventofcode.com>Advent of Code</a>. Can be used to generate previous years input/files as well.
 
 # AOC Star Summary
-
-| Year   | Stars | Completion % |
-| ------ | ----- | ------------ |
-| [2023] |       | 0            |
-| [2022] | 21    | 42           |
-| [2021] | 25    | 50           |
-| [2020] | 14    | 28           |
-| [2019] | 10    | 20           |
-| [2018] | 10    | 20           |
-| [2017] | 15    | 30           |
-| [2016] | 20    | 40           |
-| [2015] | 32    | 64           |
-| TOTAL  | 147   | 32.67        |
+| Year   |   Stars |   Completion % |
+|--------|---------|----------------|
+| [2023] |       6 |          12    |
+| [2022] |      21 |          42    |
+| [2021] |      25 |          50    |
+| [2020] |      14 |          28    |
+| [2019] |      10 |          20    |
+| [2018] |      13 |          26    |
+| [2017] |      15 |          30    |
+| [2016] |      20 |          40    |
+| [2015] |      32 |          64    |
+| TOTAL  |     156 |          34.67 |
 
 # Installation and Setup
 
@@ -117,23 +116,25 @@ newday -i -d 7 -y 2014 -t a
 
 ### -i (--input)
 
-Pulls the input for the day selected. Must have session id stored as an environment variable named COOKIE_SESSION in the .env file
+> Default functionality: do NOT pull input for the day
 
-default: False
+Pulls the input for the day selected. Must have session id stored as an environment variable named COOKIE_SESSION in the .env file
 
 ### -d (--day)
 
-Changes the day from today's date to any other daily puzzle. Selection is ints from 1-25.
+> Default functionality: today's date (int)
 
-default: today's date (int)
+Changes the day from today's date to any other daily puzzle. Selection is ints from 1-25.
 
 ### -y (--year)
 
+> Default functionality: today's year (int)
+
 Changes the year from the current year to any of the previous. Selection is each year including and after 2015. (2015-)
 
-default: today's year (int)
-
 ### -t (--test-input)
+
+> Default functionality: does not create a -test.txt file
 
 Creates a test input file that you can use to trial code. You can also include a name (no spaces in the name) and that will add a suffix to the file name. If not included no test file will be created. Here are a few examples:
 
@@ -156,6 +157,58 @@ newday -t custom-file-name-test
 
 > Creates a file named `./{year}/inputs/{day}-test-custom-file-name-test.txt`
 > Not sure why, but you could do this
+
+## -s (--save-example-input)
+
+> Default functionality: does NOT pull example input
+
+Sometimes we want to go as far as creating an input .txt file from the example given directly in the problem. This flag will do that. It scrapes the problem page for the given day and saves it in a file named `./{year}/inputs/{day}-test-e.txt` (e for example).
+
+## Other newday examples
+
+```
+newday -d 2 -i -t -s
+```
+
+> Create a new file for the 2nd of the current year. Pull the main input, create a test file, create another test file and populate the example input from the problem. Output below:
+
+```
+--- PROCESS STARTING ---
+
+-> CREATING PYTHON FILE: 2023/solutions/day2.py
+-> FILE CREATED FROM TEMPLATE: TEMPLATE_FILE.py
+
+-> CREATING INPUT FILE: 2023/inputs/2.txt
+-> INPUT FILE SAVED: 2023/inputs/2.txt
+
+-> CREATING TEST INPUT FILE: 2023/inputs/2-test.txt
+-> TEST INPUT FILE CREATED: 2023/inputs/2-test.txt
+
+-> CREATING TEST INPUT FILE FROM EXAMPLE INPUT: ./2023/inputs/2-test-l.txt
+-> TEST INPUT FILE CREATED FROM EXAMPLE: ./2023/inputs/2-test-l.txt
+
+--- PROCESS COMPLETE ---
+```
+
+> You can run the same command again, and it will let you know that all the files already exist and the script will not overwrite them. Output below:
+
+```
+--- PROCESS STARTING ---
+
+-> CREATING PYTHON FILE: 2023/solutions/day2.py
+-> FILE EXISTS. Will not overwrite
+
+-> CREATING INPUT FILE: 2023/inputs/2.txt
+-> FILE EXISTS. Will not overwrite
+
+-> CREATING TEST INPUT FILE: 2023/inputs/2-test.txt
+-> FILE EXISTS. Will not overwrite.
+
+-> CREATING TEST INPUT FILE FROM EXAMPLE INPUT: ./2023/inputs/2-test-l.txt
+-> FILE EXISTS. Will not overwrite.
+
+--- PROCESS COMPLETE ---
+```
 
 ## Flag Ordering
 
