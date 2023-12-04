@@ -15,25 +15,6 @@ from aoc_util.aoc_requests import get_aoc_page
 # EASTERN TIME FOR EVERYTHING
 EASTERN = pytz.timezone("US/Eastern")
 
-def is_valid_date(day: int, year: int) -> bool:
-    """
-    checks to validate the passed in day is
-    less than or equal to today's date in order to
-    not send any unnecessary requests
-
-    Args:
-        day (int): day of requested input
-        year (int): year of requested input
-
-    Returns:
-        bool:
-            True -> requested input can be queried,
-            False -> requested input is in the future and cannot be accessed
-    """
-    today_date = dt.datetime.now(EASTERN)
-    return year <= today_date.year and day <= today_date.day
-
-
 def is_aoc_input_ready(day: int, year: int) -> bool:
     """
     checks to see if the input is ready to be pulled
@@ -65,7 +46,8 @@ def create_input_file(day: int, year: int) -> None:
 
     Note:
         This does not create the test input (from the question),
-        you will have to create that file yourself
+        you will have to create that file yourself or 
+        use the -t (--test-input) flag to create an empty file
     """
     file_path = Path(f"./{year}/inputs/{day}.txt")
     # if the folder doesn't exists, create it
@@ -85,6 +67,25 @@ def create_input_file(day: int, year: int) -> None:
         print(f"INPUT SAVED: {file_path}")
     else:
         print(f"{file_path} already exists. Will not overwrite")
+
+def create_test_input_file(day:int,year:int,suffix:str = None) -> None:
+    """
+    Creates a test input file for the given day and year
+    Will add a suffix to the file name if suffix is not None
+    """
+    if suffix is None: 
+        file_path = Path(f"./{year}/inputs/{day}-test.txt")
+    else:
+        file_path = Path(f"./{year}/inputs/{day}-test-{suffix}.txt")
+    # if the folder doesn't exists, create it
+    if not file_path.parent.exists():
+        file_path.parent.mkdir(parents=True)
+    # if the file doesn't exist, create it
+    if not file_path.exists():
+        file_path.touch()
+        print(f"TEST INPUT FILE CREATED: {file_path}")
+    else:
+        print(f"TEST INPUT FILE EXISTS. NOT CREATED. {file_path}")
 
 
 def create_python_file(day: int, year: int) -> None:
@@ -147,6 +148,14 @@ def newday() -> None:
         type=bool,
         help="If tagged retrives the selected day's input. Requires session cookie as env variable.",
     )
+    parser.add_argument(
+        "-t",
+        "--test-input",
+        nargs="?",
+        default="",
+        type=str,
+        help="Creates an empty .txt file with optional sub-tags named",
+    )
     args = parser.parse_args()
 
     if args.day is None and args.year is None and dt.datetime.now(EASTERN).month != 12:
@@ -156,9 +165,6 @@ def newday() -> None:
         args.day = dt.datetime.now(EASTERN).day
     if args.year is None:
         args.year = dt.datetime.now(EASTERN).year
-
-    if not is_valid_date(args.day, args.year):
-        raise ValueError(f"Selections for newday are invalid.\n{args}")
 
     # CHECK VALUES to make sure they are in range
     if args.day not in range(1, 26):
@@ -174,6 +180,11 @@ def newday() -> None:
     if args.input and is_aoc_input_ready(args.day, args.year):
         print("CREATING INPUT FILE")
         create_input_file(args.day, args.year)
+
+    if args.test_input!="":
+        print("CREATING TEST INPUT FILE")
+        create_test_input_file(args.day, args.year,args.test_input)
+        
     print("PROCESS COMPLETE")
 
 

@@ -112,7 +112,7 @@ newday -d 1 -y 2015 -i
 Use flags to add additional arguments to the script. You will add the value after you type the flag. If you wanted to create a file and get the input for Dec 7, 2014's challenge, you would do the following
 
 ```
-newday -i -d 7 -y 2014
+newday -i -d 7 -y 2014 -t a
 ```
 
 ### -i (--input)
@@ -132,6 +132,30 @@ default: today's date (int)
 Changes the year from the current year to any of the previous. Selection is each year including and after 2015. (2015-)
 
 default: today's year (int)
+
+### -t (--test-input)
+
+Creates a test input file that you can use to trial code. You can also include a name (no spaces in the name) and that will add a suffix to the file name. If not included no test file will be created. Here are a few examples:
+
+```
+newday -t
+```
+
+> Creates a file named `./{year}/inputs/{day}-test.txt`
+
+```
+newday -t p1
+```
+
+> Creates a file named `./{year}/inputs/{day}-test-p1.txt`
+> Common use case for when part_1 and part_2 have different sample inputs
+
+```
+newday -t custom-file-name-test
+```
+
+> Creates a file named `./{year}/inputs/{day}-test-custom-file-name-test.txt`
+> Not sure why, but you could do this
 
 ## Flag Ordering
 
