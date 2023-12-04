@@ -76,9 +76,9 @@ def create_input_file(day: int, year: int) -> None:
         you will have to create that file yourself or
         use the -t (--test-input) flag to create an empty file
     """
+    file_path = Path(f"./{year}/inputs/{day}.txt")
+    print(f"-> CREATING INPUT FILE: [yellow]{file_path}")
     if is_aoc_input_ready(day, year):
-        file_path = Path(f"./{year}/inputs/{day}.txt")
-        print(f"-> CREATING INPUT FILE: [yellow]{file_path}")
         if check_paths_create_files(file_path):
             # if the file didn't exist (this function creates it),
             # get the input and save to to the file
@@ -89,7 +89,7 @@ def create_input_file(day: int, year: int) -> None:
         else:
             print("[blue]-> FILE EXISTS. Will not overwrite\n")
     else:
-        print(f"[red]-> INPUT IS NOT READY FOR YEAR: {year} DAY: {day}")
+        print(f"[red]-> INPUT IS NOT READY FOR YEAR: {year} DAY: {day}\n")
 
 
 def create_test_input_file(day: int, year: int, suffix: str = None) -> None:
@@ -110,9 +110,9 @@ def create_test_input_file(day: int, year: int, suffix: str = None) -> None:
 
 
 def create_test_input_file_from_example(year: int, day: int):
+    file_path = f"./{year}/inputs/{day}-test-e.txt"
+    print(f"-> CREATING TEST INPUT FILE FROM EXAMPLE INPUT: [yellow]{file_path}")
     if is_aoc_input_ready(day, year):
-        file_path = f"./{year}/inputs/{day}-test-e.txt"
-        print(f"-> CREATING TEST INPUT FILE FROM EXAMPLE INPUT: [yellow]{file_path}")
         if check_paths_create_files(Path(file_path)):
             input_example = pull_example_input(
                 f"https://adventofcode.com/{year}/day/{day}"
@@ -122,7 +122,7 @@ def create_test_input_file_from_example(year: int, day: int):
         else:
             print("[blue]-> FILE EXISTS. Will not overwrite.\n")
     else:
-        print(f"[red]-> INPUT IS NOT READY FOR YEAR: {year} DAY: {day}")
+        print(f"[red]-> INPUT IS NOT READY FOR YEAR: {year} DAY: {day}\n")
 
 
 def create_python_file(day: int, year: int) -> None:
