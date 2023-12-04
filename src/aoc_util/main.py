@@ -11,7 +11,6 @@ from aoc_util.files import (
     create_python_file,
     create_test_input_file,
     create_test_input_file_from_example,
-    is_aoc_input_ready,
 )
 
 # EASTERN TIME FOR EVERYTHING
@@ -87,7 +86,7 @@ def newday() -> None:
     """CONDITIONAL CREATIONS"""
 
     # Create Input File (prod)
-    if args.input and is_aoc_input_ready(args.day, args.year):
+    if args.input:
         create_input_file(args.day, args.year)
 
     # Create a Test Input File (testing)
