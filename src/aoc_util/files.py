@@ -1,5 +1,4 @@
 import datetime as dt
-import warnings
 from pathlib import Path
 
 import pytz
@@ -18,18 +17,7 @@ def is_aoc_input_ready(day: int, year: int) -> bool:
     """
     checks to see if the input is ready to be pulled
     """
-    today = dt.datetime.now(EASTERN)
-    if EASTERN.localize(dt.datetime(year, 12, day)) <= today:
-        return True
-    warnings.warn_explicit(
-        "\nInput is not ready. "
-        "Please request a valid day, or wait for your input to be ready.",
-        UserWarning,
-        f"src/file_creation.py : get_input(day={day},year={year}) : line ",
-        50,
-        "newday",
-    )
-    return False
+    return EASTERN.localize(dt.datetime(year, 12, day)) <= dt.datetime.now(EASTERN)
 
 
 def get_all_code_formated_html(url: str) -> list:
