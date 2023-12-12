@@ -87,7 +87,9 @@ class Grid:
                 f"New Values don't match current height.\nNew Values: {new_values} Length: {len(new_values)}\nGrid Height: {self.height}"
             )
         for idx_, v in enumerate(new_values):
+            self.rows[idx_] = list(self.rows[idx_])
             self.rows[idx_].insert(column_index, v)
+            self.rows[idx_] = "".join(self.rows[idx_])
 
         self.width += 1
 
@@ -159,11 +161,21 @@ class Grid:
                     yield {(x, y): self.get(Point(x, y))}
 
     @staticmethod
-    def manhattan_distance(a: Point, b: Point) -> int:
+    def manhattan_distance(a: Point|tuple, b: Point|tuple) -> int:
         """calculate manhattan distance between 2 points"""
+        if not isinstance(a, Point):
+            a = Point(a[0],a[1])
+        if not isinstance(b,Point):
+            b = Point(b[0],b[1])
+
         return abs(a.x - b.x) + abs(a.y - b.y)
 
     @staticmethod
-    def euclidean_distance(a: Point, b: Point) -> float:
+    def euclidean_distance(a: Point|tuple, b: Point|tuple) -> float:
         """calculate the euclidean distance between 2 points"""
+        if not isinstance(a, Point):
+            a = Point(a[0],a[1])
+        if not isinstance(b,Point):
+            b = Point(b[0],b[1])
+
         return math.sqrt(abs(a.x - b.x) ** 2 + abs(a.y - b.y) ** 2)
