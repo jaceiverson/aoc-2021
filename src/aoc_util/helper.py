@@ -3,6 +3,7 @@
 from pathlib import Path
 from time import perf_counter_ns
 from typing import Any
+from rich import print
 
 
 def read(path: str) -> str:
@@ -50,25 +51,20 @@ def chunks(input_list: list, n: int = 5) -> list[list[Any]]:
 """
 WRAPPERS
 """
+from rich import print
 
-
-# a timer wrapper to time functions in ns
 def mytime(func):
     def wrapper(*args, **kwargs):
         start = perf_counter_ns()
         result = func(*args, **kwargs)
         end = perf_counter_ns()
-        print(f"RUN TIME: {func.__name__:>10} : {end - start:>10} ns")
+        print(f"[yellow]RUN TIME:[/yellow] {end - start:10.0f} ns | [bold]{func.__name__}[/bold]")
         return result
 
     return wrapper
 
 
-
-
-
-# average time decorator
-def avgtime(run_times=1):
+def avgtime(run_times=10):
     def decorator(func):
         def wrapper(*args, **kwargs):
             times = []
@@ -79,8 +75,10 @@ def avgtime(run_times=1):
                 end = perf_counter_ns()
                 times.append(end - start)
             if times:
-                print(f"AVG TIME ({run_times} runs): {func.__name__:>10} : {sum(times)/len(times):>10} ns")
+                print(f"[yellow]AVG TIME:[/yellow] {sum(times)/len(times):10.0f} ns | [bold]{func.__name__}[/bold] | {run_times} runs")
             return result
+
         wrapper.__name__ = func.__name__
         return wrapper
+
     return decorator
