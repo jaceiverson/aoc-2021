@@ -61,7 +61,7 @@ def mytime(func):
         end = perf_counter_ns()
         print(
             f"[yellow]RUN TIME:[/yellow] {end - start:10.0f} ns "
-            "| [bold]{func.__name__}[/bold]"
+            f"| [bold]{func.__name__}[/bold]"
         )
         return result
 
@@ -81,7 +81,7 @@ def avgtime(run_times=10):
             if times:
                 print(
                     f"[yellow]AVG TIME:[/yellow] {sum(times)/len(times):10.0f} ns "
-                    "| [bold]{func.__name__}[/bold] | {run_times} runs"
+                    f"| [bold]{func.__name__}[/bold] | {run_times} runs"
                 )
             return result
 

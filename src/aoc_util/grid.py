@@ -62,7 +62,7 @@ class Grid:
             return self.rows[row_index]
         raise IndexError(
             "Row Index out of Range. Max Index (Height): "
-            "{self.height}. Requested Row: {row_index}"
+            f"{self.height}. Requested Row: {row_index}"
         )
 
     def get_column(self, column_index: int) -> list[Point]:
@@ -71,7 +71,7 @@ class Grid:
             return [x[column_index] for x in self.rows]
         raise IndexError(
             "Column Index out of Range. Max Index (Width): "
-            "{self.width}. Requested Column: {column_index}"
+            f"{self.width}. Requested Column: {column_index}"
         )
 
     def add_row(self, new_values: list[str], row_index: int) -> None:
@@ -79,8 +79,8 @@ class Grid:
         if len(new_values) != self.width:
             raise IndexError(
                 "New Values don't match current width.\n"
-                "New Values: {new_values} Length: {len(new_values)}\n"
-                "Grid Width: {self.width}"
+                f"New Values: {new_values} Length: {len(new_values)}\n"
+                f"Grid Width: {self.width}"
             )
         self.rows.insert(row_index, new_values)
         self.height += 1
@@ -90,8 +90,8 @@ class Grid:
         if len(new_values) != self.height:
             raise IndexError(
                 "New Values don't match current height.\n"
-                "New Values: {new_values} Length: {len(new_values)}\n"
-                "Grid Height: {self.height}"
+                f"New Values: {new_values} Length: {len(new_values)}\n"
+                f"Grid Height: {self.height}"
             )
         for idx_, v in enumerate(new_values):
             self.rows[idx_] = list(self.rows[idx_])
