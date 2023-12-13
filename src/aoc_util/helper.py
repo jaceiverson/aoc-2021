@@ -58,22 +58,29 @@ def mytime(func):
         start = perf_counter_ns()
         result = func(*args, **kwargs)
         end = perf_counter_ns()
-        print(f"{func.__name__:>10} : {end-start:>10} ns")
+        print(f"RUN TIME: {func.__name__:>10} : {end - start:>10} ns")
         return result
 
     return wrapper
 
 
-# average time decorator
-def avgtime(func):
-    def wrapper(*args, **kwargs):
-        run_times = kwargs["run_times"] if "run_times" in kwargs else 1
-        times = []
-        for _ in range(run_times):
-            start = perf_counter_ns()
-            func()
-            end = perf_counter_ns()
-            times.append(end - start)
-        print(f"{func.__name__:>10} : {sum(times)/len(times):>10} ns")
 
-    return wrapper
+
+
+# average time decorator
+def avgtime(run_times=1):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            times = []
+            result = func(*args, **kwargs)
+            for _ in range(run_times - 1):
+                start = perf_counter_ns()
+                func(*args, **kwargs)
+                end = perf_counter_ns()
+                times.append(end - start)
+            if times:
+                print(f"AVG TIME ({run_times} runs): {func.__name__:>10} : {sum(times)/len(times):>10} ns")
+            return result
+        wrapper.__name__ = func.__name__
+        return wrapper
+    return decorator
