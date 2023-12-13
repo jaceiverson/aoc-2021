@@ -1,5 +1,6 @@
-import requests
 import os
+
+import requests
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,4 +24,5 @@ def get_aoc_page(url: str) -> requests.Response:
         headers={
             "User-agent": "github.com/jaceiverson/aoc-util by iverson.jace@gmail.com"
         },
+        timeout=120,
     )

@@ -1,9 +1,11 @@
 """Used to automatically update README to reflect stars earned"""
 
-from typing import Optional
 from datetime import date
-from bs4 import BeautifulSoup
+from typing import Optional
+
 import pandas as pd
+from bs4 import BeautifulSoup
+from rich import print
 
 from aoc_util.aoc_requests import get_aoc_page
 
@@ -52,11 +54,12 @@ def update_readme(new_table: Optional[str] = None) -> None:
     Updates the README.md file with your current status in the AOC
     Accepts a markdown style table from aoc_stars()
     """
+    print("[yellow]--- PROCESS STARTING ---\n")
     # if no table passed in, will create one from aoc_stars()
     if new_table is None:
         new_table = get_aoc_stars()
     # GET current README file
-    with open("README.md", "r") as f:
+    with open("README.md") as f:
         md = f.read()
     # remove current table (Only Element under AOC Star Summary)
     new = md.split("#")
@@ -71,7 +74,8 @@ def update_readme(new_table: Optional[str] = None) -> None:
     with open("README.md", "w") as f:
         f.write("#".join(new))
 
-    print("README.md Updated")
+    print("[green]-> README.md UPDATED\n")
+    print("[yellow]--- PROCESS COMPLETE ---")
 
 
 if __name__ == "__main__":
