@@ -3,18 +3,19 @@
 A library to help create files and pull inputs for the <a href=https://adventofcode.com>Advent of Code</a>. Can be used to generate previous years input/files as well.
 
 # AOC Star Summary
-| Year   |   Stars |   Completion % |
-|--------|---------|----------------|
-| [2023] |       6 |          12    |
-| [2022] |      21 |          42    |
-| [2021] |      25 |          50    |
-| [2020] |      14 |          28    |
-| [2019] |      10 |          20    |
-| [2018] |      13 |          26    |
-| [2017] |      15 |          30    |
-| [2016] |      20 |          40    |
-| [2015] |      32 |          64    |
-| TOTAL  |     156 |          34.67 |
+
+| Year   | Stars | Completion % |
+| ------ | ----- | ------------ |
+| [2023] | 6     | 12           |
+| [2022] | 21    | 42           |
+| [2021] | 25    | 50           |
+| [2020] | 14    | 28           |
+| [2019] | 10    | 20           |
+| [2018] | 13    | 26           |
+| [2017] | 15    | 30           |
+| [2016] | 20    | 40           |
+| [2015] | 32    | 64           |
+| TOTAL  | 156   | 34.67        |
 
 # Installation and Setup
 
@@ -245,16 +246,71 @@ print(f"PART 2: {part_2_answer}")
 When you clone/fork and set up this repo for use, you should have the following file structure
 
 ```
-advent_of_code/
-└── src/
+advent_of_code
+└── src
     └── aoc_util
         ├── __init__.py
         ├── aoc_requests.py
-        ├── file_creation.py
+        ├── files.py
+        ├── grid.py
         ├── helper.py
+        ├── main.py
         └── readme.py
-└── 20**/
-    └── input/
-    └── solutions/
-└── .env
+├── README.md
+├── TEMPLATE_FILE.py
+├── pyproject.toml
+├── requirements.txt
+```
+
+# Utility Functions
+
+## helper.py
+
+### Timing Decorators
+
+You can use the timing decorators to time your functions. There are 2 options
+
+- mytime
+- avgtime
+
+You will access them both using the decorator `@` and you can also specify if you'd like to return the time or just the regular function value. If you specify `return_time=True` your function will return a tuple, the regular function result and the second element will be the time it took to run. In both cases the time it took to run will be outputted to the terminal.
+
+> The only different in the `@mytime` and `@avgtime` is the average time uses the plural `return_times=True` instead of the singular like `@mytime`. This is because `@avgtime` returns a list of values for each time it ran.
+
+#### Return the time with the result
+
+```py
+from aoc_util.helper import mytime
+
+@mytime(return_time=True)
+def part_1():
+    # read in data
+    # do stuff
+    # return value
+    return True
+
+result, time = part_1()
+```
+
+#### Just time the function, don't return the time
+
+```py
+from aoc_util.helper import mytime
+
+@mytime()
+def part_1():
+    # read in data
+    # do stuff
+    # return value
+    return True
+
+result = part_1()
+```
+
+## grid.py
+
+Really just for me to deal with the grid problems. Not really for use if you are learning as it takes some of the complexity out of dealing with 2D grids, but feel free to use as you'd like.
+
+```py
+from helper.grid import Grid
 ```

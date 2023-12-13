@@ -54,21 +54,26 @@ WRAPPERS
 """
 
 
-def mytime(func):
-    def wrapper(*args, **kwargs):
-        start = perf_counter_ns()
-        result = func(*args, **kwargs)
-        end = perf_counter_ns()
-        print(
-            f"[yellow]RUN TIME:[/yellow] {end - start:10.0f} ns "
-            f"| [bold]{func.__name__}[/bold]"
-        )
-        return result
+def mytime(return_time=False):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            start = perf_counter_ns()
+            result = func(*args, **kwargs)
+            end = perf_counter_ns()
+            print(
+                f"[yellow]RUN TIME:[/yellow] {end - start:10.0f} ns "
+                f"| [bold]{func.__name__}[/bold]"
+            )
+            if return_time:
+                return result, end - start
+            return result
 
-    return wrapper
+        return wrapper
+
+    return decorator
 
 
-def avgtime(run_times=10):
+def avgtime(run_times=10, return_times=False):
     def decorator(func):
         def wrapper(*args, **kwargs):
             times = []
@@ -83,6 +88,8 @@ def avgtime(run_times=10):
                     f"[yellow]AVG TIME:[/yellow] {sum(times)/len(times):10.0f} ns "
                     f"| [bold]{func.__name__}[/bold] | {run_times} runs"
                 )
+            if return_times:
+                return result, times
             return result
 
         wrapper.__name__ = func.__name__
