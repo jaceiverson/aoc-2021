@@ -7,6 +7,7 @@ inspired by
 """
 import math
 from dataclasses import dataclass
+
 from rich import print
 
 
@@ -41,9 +42,9 @@ class Grid:
         """returns dimensions of grid as tuple (height,width)"""
         return self.height, self.width
 
-    def _add_line(self, l: str) -> None:
+    def _add_line(self, line: str) -> None:
         """adds a row to the bottom"""
-        self.rows.append(l.strip())
+        self.rows.append(line.strip())
 
     def finish(self) -> None:
         """finish making grid, mark height and width"""
@@ -60,7 +61,8 @@ class Grid:
         if row_index < self.height:
             return self.rows[row_index]
         raise IndexError(
-            f"Row Index out of Range. Max Index (Height): {self.height}. Requested Row: {row_index}"
+            "Row Index out of Range. Max Index (Height): "
+            "{self.height}. Requested Row: {row_index}"
         )
 
     def get_column(self, column_index: int) -> list[Point]:
@@ -68,14 +70,17 @@ class Grid:
         if column_index < self.width:
             return [x[column_index] for x in self.rows]
         raise IndexError(
-            f"Column Index out of Range. Max Index (Width): {self.width}. Requested Column: {column_index}"
+            "Column Index out of Range. Max Index (Width): "
+            "{self.width}. Requested Column: {column_index}"
         )
 
     def add_row(self, new_values: list[str], row_index: int) -> None:
         """adds a row at the given index"""
         if len(new_values) != self.width:
             raise IndexError(
-                f"New Values don't match current width.\nNew Values: {new_values} Length: {len(new_values)}\nGrid Width: {self.width}"
+                "New Values don't match current width.\n"
+                "New Values: {new_values} Length: {len(new_values)}\n"
+                "Grid Width: {self.width}"
             )
         self.rows.insert(row_index, new_values)
         self.height += 1
@@ -84,7 +89,9 @@ class Grid:
         """adds a column at the given index"""
         if len(new_values) != self.height:
             raise IndexError(
-                f"New Values don't match current height.\nNew Values: {new_values} Length: {len(new_values)}\nGrid Height: {self.height}"
+                "New Values don't match current height.\n"
+                "New Values: {new_values} Length: {len(new_values)}\n"
+                "Grid Height: {self.height}"
             )
         for idx_, v in enumerate(new_values):
             self.rows[idx_] = list(self.rows[idx_])
@@ -161,21 +168,21 @@ class Grid:
                     yield {(x, y): self.get(Point(x, y))}
 
     @staticmethod
-    def manhattan_distance(a: Point|tuple, b: Point|tuple) -> int:
+    def manhattan_distance(a: Point | tuple, b: Point | tuple) -> int:
         """calculate manhattan distance between 2 points"""
         if not isinstance(a, Point):
-            a = Point(a[0],a[1])
-        if not isinstance(b,Point):
-            b = Point(b[0],b[1])
+            a = Point(a[0], a[1])
+        if not isinstance(b, Point):
+            b = Point(b[0], b[1])
 
         return abs(a.x - b.x) + abs(a.y - b.y)
 
     @staticmethod
-    def euclidean_distance(a: Point|tuple, b: Point|tuple) -> float:
+    def euclidean_distance(a: Point | tuple, b: Point | tuple) -> float:
         """calculate the euclidean distance between 2 points"""
         if not isinstance(a, Point):
-            a = Point(a[0],a[1])
-        if not isinstance(b,Point):
-            b = Point(b[0],b[1])
+            a = Point(a[0], a[1])
+        if not isinstance(b, Point):
+            b = Point(b[0], b[1])
 
         return math.sqrt(abs(a.x - b.x) ** 2 + abs(a.y - b.y) ** 2)

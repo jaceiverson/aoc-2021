@@ -3,6 +3,7 @@
 from pathlib import Path
 from time import perf_counter_ns
 from typing import Any
+
 from rich import print
 
 
@@ -51,14 +52,17 @@ def chunks(input_list: list, n: int = 5) -> list[list[Any]]:
 """
 WRAPPERS
 """
-from rich import print
+
 
 def mytime(func):
     def wrapper(*args, **kwargs):
         start = perf_counter_ns()
         result = func(*args, **kwargs)
         end = perf_counter_ns()
-        print(f"[yellow]RUN TIME:[/yellow] {end - start:10.0f} ns | [bold]{func.__name__}[/bold]")
+        print(
+            f"[yellow]RUN TIME:[/yellow] {end - start:10.0f} ns "
+            "| [bold]{func.__name__}[/bold]"
+        )
         return result
 
     return wrapper
@@ -75,7 +79,10 @@ def avgtime(run_times=10):
                 end = perf_counter_ns()
                 times.append(end - start)
             if times:
-                print(f"[yellow]AVG TIME:[/yellow] {sum(times)/len(times):10.0f} ns | [bold]{func.__name__}[/bold] | {run_times} runs")
+                print(
+                    f"[yellow]AVG TIME:[/yellow] {sum(times)/len(times):10.0f} ns "
+                    "| [bold]{func.__name__}[/bold] | {run_times} runs"
+                )
             return result
 
         wrapper.__name__ = func.__name__
